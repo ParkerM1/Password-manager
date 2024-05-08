@@ -53,32 +53,32 @@ class PasswordManager(private val masterPassword: String) {
         }
     }
 
-    private fun encrypt(text: String): String {
-        val keySpec = generateKeySpec(masterPassword)
-        val secretKey = SecretKeySpec(keySpec.encoded, "AES")
-        val cipher = Cipher.getInstance("AES")
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
-        val encryptedBytes = cipher.doFinal(text.toByteArray())
-        return Base64.getEncoder().encodeToString(encryptedBytes)
-    }
-
-    private fun decrypt(text: String): String {
-        val keySpec = generateKeySpec(masterPassword)
-        val secretKey = SecretKeySpec(keySpec.encoded, "AES")
-        val cipher = Cipher.getInstance("AES")
-        cipher.init(Cipher.DECRYPT_MODE, secretKey)
-        val decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(text))
-        return String(decryptedBytes)
-    }
-
-    private fun generateKeySpec(password: String): SecretKey {
-        val salt = ByteArray(16)
-        val random = SecureRandom()
-        random.nextBytes(salt)
-        val factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
-        val spec = PBEKeySpec(password.toCharArray(), salt, 65536, 256)
-        return SecretKeySpec(factory.generateSecret(spec).encoded, "AES")
-    }
+//    private fun encrypt(text: String): String {
+//        val keySpec = generateKeySpec(masterPassword)
+//        val secretKey = SecretKeySpec(keySpec.encoded, "AES")
+//        val cipher = Cipher.getInstance("AES")
+//        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
+//        val encryptedBytes = cipher.doFinal(text.toByteArray())
+//        return Base64.getEncoder().encodeToString(encryptedBytes)
+//    }
+//
+//    private fun decrypt(text: String): String {
+//        val keySpec = generateKeySpec(masterPassword)
+//        val secretKey = SecretKeySpec(keySpec.encoded, "AES")
+//        val cipher = Cipher.getInstance("AES")
+//        cipher.init(Cipher.DECRYPT_MODE, secretKey)
+//        val decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(text))
+//        return String(decryptedBytes)
+//    }
+//
+//    private fun generateKeySpec(password: String): SecretKey {
+//        val salt = ByteArray(16)
+//        val random = SecureRandom()
+//        random.nextBytes(salt)
+//        val factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
+//        val spec = PBEKeySpec(password.toCharArray(), salt, 65536, 256)
+//        return SecretKeySpec(factory.generateSecret(spec).encoded, "AES")
+//    }
 }
 
 fun main() {
